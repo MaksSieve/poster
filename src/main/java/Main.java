@@ -1,3 +1,4 @@
+import edu.masitnikov.poster.domain.Tweet;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
