@@ -1,4 +1,4 @@
-package edu.masitnikov.poster.domain;
+package ru.hse.edu.masitnikov.poster.domain;
 
 import javax.persistence.*;
 

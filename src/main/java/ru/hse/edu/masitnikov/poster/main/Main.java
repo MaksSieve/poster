@@ -1,4 +1,6 @@
-import edu.masitnikov.poster.domain.Tweet;
+package ru.hse.edu.masitnikov.poster.main;
+
+import ru.hse.edu.masitnikov.poster.domain.Tweet;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -8,9 +10,6 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
 import java.util.List;
 
-/**
- * Created by Максим on 11.05.2016.
- */
 public class Main {
     private static final SessionFactory ourSessionFactory;
     private static final ServiceRegistry serviceRegistry;
