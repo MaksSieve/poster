@@ -12,7 +12,7 @@ public class Twit extends TimerTask {
     public Twit(Timer timer, Twitter twitter, String text) {
         setText(text);
         setTwitter(twitter);
-        setTwitter(twitter);
+        setTimer(timer);
     }
 
     private Timer timer;

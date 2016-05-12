@@ -89,12 +89,10 @@ public class Main {
             while (true) {
                 System.out.println("Get list of tweets");
                 List<Tweet> tweetList = dao.getList();
-                List<Timer> timerList = null;
+                Date date = new Date();
+                System.out.println("Current date-time: " + date.toString());
                 if (tweetList.size() != 0) {
-                    System.out.println("Create schedule");
                     for (Tweet tweet:tweetList) {
-                        Date date = new Date();
-                        System.out.println("Current date-time: " + date.toString());
                         System.out.println("Tweet: " + tweet.getText()+" ::: " + tweet.getDate().toString() + " ::: " + tweet.getId());
                         Timer timer = new Timer();
                         timer.schedule(new Twit(timer, twitter, tweet.getText()), tweet.getDate());
@@ -103,7 +101,7 @@ public class Main {
                 }else{
                     System.out.println("List is empty");
                 }
-                thread.sleep(60000);
+                thread.sleep(20000);
             }
 
         }catch (Exception e){
