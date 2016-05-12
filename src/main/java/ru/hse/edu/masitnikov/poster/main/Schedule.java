@@ -58,7 +58,7 @@ public class Schedule extends TimerTask {
                 Timer timer = new Timer();
                 timer.schedule(new Twit(timer, twitter, tweet.getText()), tweet.getDate());
                 timerList.add(timer);
-                dao.removeTweet(tweet.getId());
+                dao.removeTweetById(tweet.getId());
             }
         }else{
             System.out.println("List is empty");

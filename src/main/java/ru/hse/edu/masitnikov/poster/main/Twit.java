@@ -6,9 +6,7 @@ import twitter4j.TwitterException;
 import java.util.Timer;
 import java.util.TimerTask;
 
-/**
- * Created by Максим on 12.05.2016.
- */
+
 public class Twit extends TimerTask {
 
     public Twit(Timer timer, Twitter twitter, String text) {
