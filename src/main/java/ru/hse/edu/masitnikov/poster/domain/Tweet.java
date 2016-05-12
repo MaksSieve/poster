@@ -19,6 +19,10 @@ public class Tweet {
     @Temporal(TemporalType.TIMESTAMP)
     private Date date;
 
+    @Column
+    @Enumerated(EnumType.STRING)
+    private Status status;
+
     public Integer getId() {
         return id;
     }
