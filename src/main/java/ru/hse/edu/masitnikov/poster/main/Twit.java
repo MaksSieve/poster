@@ -47,6 +47,7 @@ public class Twit extends TimerTask {
 
     public void run() {
         try {
+            System.out.println("TIME TO TWEEEEEEET!!!!!\nTweet: "+text);
             twitter.updateStatus(text);
         } catch (TwitterException e) {
             e.printStackTrace();

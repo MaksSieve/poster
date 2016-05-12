@@ -6,10 +6,15 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import ru.hse.edu.masitnikov.poster.domain.Tweet;
 import twitter4j.Twitter;
+import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
+import twitter4j.auth.AccessToken;
+import twitter4j.auth.RequestToken;
 import twitter4j.conf.ConfigurationBuilder;
 
+import java.util.Date;
 import java.util.List;
+import java.util.Scanner;
 import java.util.Timer;
 
 public class Main {
@@ -48,29 +53,29 @@ public class Main {
         final TweetDao dao = new TweetDao();
 
         try {
-//            Scanner sc = new Scanner(System.in);
-//            while (true) {
-//                RequestToken requestToken = twitter.getOAuthRequestToken();
-//                AccessToken accessToken = null;
-//                System.out.println(requestToken.getAuthenticationURL());
-//                System.out.print("Enter your pin please: ");
-//
-//                String pin = sc.nextLine();
-//                try{
-//                    if(pin.length() > 0){
-//                        accessToken = twitter.getOAuthAccessToken(requestToken, pin);
-//                    }else{
-//                        accessToken = twitter.getOAuthAccessToken();
-//                    }
-//                    break;
-//                } catch (TwitterException te) {
-//                    if(401 == te.getStatusCode()){
-//                        System.out.println("Unable to get the access token.");
-//                    }else{
-//                        te.printStackTrace();
-//                    }
-//                }
-//            }
+            Scanner sc = new Scanner(System.in);
+            while (true) {
+                RequestToken requestToken = twitter.getOAuthRequestToken();
+                AccessToken accessToken = null;
+                System.out.println(requestToken.getAuthenticationURL());
+                System.out.print("Enter your pin please: ");
+
+                String pin = sc.nextLine();
+                try{
+                    if(pin.length() > 0){
+                        accessToken = twitter.getOAuthAccessToken(requestToken, pin);
+                    }else{
+                        accessToken = twitter.getOAuthAccessToken();
+                    }
+                    break;
+                } catch (TwitterException te) {
+                    if(401 == te.getStatusCode()){
+                        System.out.println("Unable to get the access token.");
+                    }else{
+                        te.printStackTrace();
+                    }
+                }
+            }
 
             Thread thread = Thread.currentThread();
 
@@ -88,6 +93,8 @@ public class Main {
                 if (tweetList.size() != 0) {
                     System.out.println("Create schedule");
                     for (Tweet tweet:tweetList) {
+                        Date date = new Date();
+                        System.out.println("Current date-time: " + date.toString());
                         System.out.println("Tweet: " + tweet.getText()+" ::: " + tweet.getDate().toString() + " ::: " + tweet.getId());
                         Timer timer = new Timer();
                         timer.schedule(new Twit(timer, twitter, tweet.getText()), tweet.getDate());
