@@ -1,13 +1,9 @@
 package ru.hse.edu.masitnikov.poster.main;
 
 import ru.hse.edu.masitnikov.poster.dao.TweetDao;
-import ru.hse.edu.masitnikov.poster.domain.Tweet;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
-import org.hibernate.service.ServiceRegistry;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
@@ -15,8 +11,8 @@ import twitter4j.auth.AccessToken;
 import twitter4j.auth.RequestToken;
 import twitter4j.conf.ConfigurationBuilder;
 
-import java.util.List;
 import java.util.Scanner;
+import java.util.Timer;
 
 public class Main {
     private static final SessionFactory ourSessionFactory;
@@ -79,25 +75,31 @@ public class Main {
                 }
             }
 
-            Thread thread = Thread.currentThread();
+            Timer greatTimer = new Timer();
+            greatTimer.schedule(new Schedule(greatTimer, twitter, dao), 0, 60000);
 
-            while (true) {
-                System.out.println("Get list of tweets");
-                List<Tweet> tweetList = dao.getList();
-                if (tweetList.size() != 0) {
-                    System.out.println("Start posting");
-                    for (Tweet tweet:tweetList) {
-                        System.out.println("Tweet: " + tweet.getText());
-                        twitter.updateStatus(tweet.getText());
-                        dao.removeTweet(tweet.getId());
-                        System.out.println("Wait...");
-                        thread.sleep(10000);
-                    }
-                }else{
-                    System.out.println("List is empty");
-                }
-                thread.sleep(60000);
-            }
+            ConsoleThread console = new ConsoleThread(greatTimer);
+
+
+
+//            while (true) {
+//                System.out.println("Get list of tweets");
+//                List<Tweet> tweetList = dao.getList();
+//                List<Timer> timerList = null;
+//                if (tweetList.size() != 0) {
+//                    System.out.println("Create schedule");
+//                    for (Tweet tweet:tweetList) {
+//                        System.out.println("Tweet: " + tweet.getText());
+//                        Timer timer = new Timer();
+//                        timer.schedule(new Twit(timer, twitter, tweet.getText()), tweet.getDate());
+//                        timerList.add(timer);
+//                        dao.removeTweet(tweet.getId());
+//                    }
+//                }else{
+//                    System.out.println("List is empty");
+//                }
+//                thread.sleep(60000);
+//            }
 
         }catch (Exception e){
             System.out.println(e.toString());
