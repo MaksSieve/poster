@@ -46,4 +46,12 @@ public class Tweet {
     public void setDate(Date date) {
         this.date = date;
     }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
 }
