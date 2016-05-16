@@ -1,4 +1,4 @@
-package ru.hse.edu.masitnikov.poster.main;
+package ru.hse.edu.masitnikov.poster.core;
 
 import ru.hse.edu.masitnikov.poster.dao.TweetDao;
 import ru.hse.edu.masitnikov.poster.domain.Tweet;

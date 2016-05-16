@@ -1,4 +1,4 @@
-package ru.hse.edu.masitnikov.poster.main;
+package ru.hse.edu.masitnikov.poster.core;
 
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
