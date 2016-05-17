@@ -15,18 +15,18 @@ import java.io.*;
 import java.util.*;
 
 public class Main {
-    public static final SessionFactory ourSessionFactory;
+    public static final SessionFactory sessionFactory;
 
     static {
         try {
-            ourSessionFactory = HibernateUtil.getSessionFactory();
+            sessionFactory = HibernateUtil.getSessionFactory();
         } catch (Throwable ex) {
             throw new ExceptionInInitializerError(ex);
         }
     }
 
-    public static Session getSession() throws HibernateException {
-        return ourSessionFactory.openSession();
+    public static SessionFactory getSessionFactory() throws HibernateException {
+        return sessionFactory;
     }
 
     public static void exit(Integer code) {
@@ -40,9 +40,6 @@ public class Main {
     public static String ACCESS = "access";
 
     public static void main(final String[] args) throws Exception {
-
-        Tweet t = new Tweet();
-
         final File keys = new File(KEYS);
         if (!keys.exists()){
             if(keys.createNewFile()){
@@ -80,14 +77,15 @@ public class Main {
 
         long userID = twitter.getId();
         twitter4j.User newUser=twitter.showUser(twitter.getScreenName());
-        String name=newUser.getName();
+        String name = newUser.getName();
         System.out.println("Logged in Twitter as: " + name);
 
 
 
-        final Session session = getSession();
+        final Session session = getSessionFactory().openSession();
         session.setFlushMode(FlushMode.ALWAYS);
         session.setCacheMode(CacheMode.IGNORE);
+        session.close();
         final TweetDao dao = new TweetDao();
 
 
@@ -109,12 +107,10 @@ public class Main {
                 if (tweetList.size() != 0) {
                     for (Tweet tweet:tweetList) {
                         System.out.println("Tweet: " + tweet.getText()+" ::: " + tweet.getDate().toString() + " ::: " + tweet.getId());
-                        Timer timer = new Timer();
-                        timer.schedule(new Twit(timer, twitter, tweet.getText()), tweet.getDate());
-                        tweet.setStatus(Status.published);
-                        session.update(tweet);
-                        session.flush();
-                        session.cancelQuery();
+//                        Timer timer = new Timer();
+//                        timer.schedule(new Twit(timer, twitter, tweet.getText()), tweet.getDate());
+//                        tweet.setStatus(Status.published);
+//                        dao.update(tweet);
                     }
 
                 }else{
@@ -126,7 +122,7 @@ public class Main {
         }catch (Exception e){
             System.out.println(e.toString());
         } finally {
-            ourSessionFactory.close();
+            sessionFactory.close();
             System.exit(1);
         }
     }

@@ -20,8 +20,7 @@ public class Tweet {
     private Date date;
 
     @Column
-    @Enumerated(EnumType.STRING)
-    private Status status;
+    private Integer status;
 
     public Integer getId() {
         return id;
@@ -47,11 +46,11 @@ public class Tweet {
         this.date = date;
     }
 
-    public Status getStatus() {
+    public Integer getStatus() {
         return status;
     }
 
-    public void setStatus(Status status) {
+    public void setStatus(Integer status) {
         this.status = status;
     }
 }
