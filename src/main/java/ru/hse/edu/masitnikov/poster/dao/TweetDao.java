@@ -20,9 +20,8 @@ public class TweetDao {
         Date curr = new Date();
         System.out.println("Current date-time: " + curr.toString());
         Query query = session.createQuery("from Tweet order by date asc");
-        session.setCacheMode(CacheMode.IGNORE);
-        session.setFlushMode(FlushMode.ALWAYS);
-        List<Tweet> list = query.setCacheable(false).list();
+
+        List<Tweet> list = query.setCacheMode(CacheMode.IGNORE).setFlushMode(FlushMode.ALWAYS).setCacheable(false).list();
         System.out.println(list.toString());
         session.flush();
         session.close();
