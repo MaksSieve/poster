@@ -1,9 +1,6 @@
 package ru.hse.edu.masitnikov.poster.dao;
 
-import org.hibernate.Criteria;
-import org.hibernate.Query;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
+import org.hibernate.*;
 import org.hibernate.criterion.Expression;
 import ru.hse.edu.masitnikov.poster.domain.Status;
 import ru.hse.edu.masitnikov.poster.domain.Tweet;
@@ -23,9 +20,11 @@ public class TweetDao {
         Date curr = new Date();
         System.out.println("Current date-time: " + curr.toString());
         Query query = session.createQuery("from Tweet order by date asc");
-        List<Tweet> list = query.list();
+        session.setCacheMode(CacheMode.IGNORE);
+        session.setFlushMode(FlushMode.ALWAYS);
+        List<Tweet> list = query.setCacheable(true).list();
         System.out.println(list.toString());
-        sessionFactory.getCache().evictDefaultQueryRegion();
+        session.flush();
         session.close();
         return list;
     }
