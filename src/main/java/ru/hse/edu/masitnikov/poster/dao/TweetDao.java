@@ -22,7 +22,7 @@ public class TweetDao {
         Query query = session.createQuery("from Tweet order by date asc");
         session.setCacheMode(CacheMode.IGNORE);
         session.setFlushMode(FlushMode.ALWAYS);
-        List<Tweet> list = query.setCacheable(true).list();
+        List<Tweet> list = query.setCacheable(false).list();
         System.out.println(list.toString());
         session.flush();
         session.close();
