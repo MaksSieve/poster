@@ -25,6 +25,7 @@ public class TweetDao {
         Query query = session.createQuery("from Tweet order by date asc");
         List<Tweet> list = query.list();
         System.out.println(list.toString());
+        sessionFactory.getCache().evictDefaultQueryRegion();
         session.close();
         return list;
     }
